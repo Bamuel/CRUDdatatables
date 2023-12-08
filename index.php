@@ -15,25 +15,8 @@
                 url: 'server_processing.php',
                 type: 'POST'
             },
-            columns: [
-                {
-                    data: 'user_id',
-                    title: '<b>user_id</b>'
-                },
-                {
-                    data: 'username',
-                    title: '<b>username</b>'
-                },
-                {
-                    data: 'password',
-                    title: '<b>password</b>'
-                },
-                {
-                    data: 'registration_date',
-                    title: '<b>registration_date</b>'
-                }
-            ],
-
+            order: [],
+            columns: []
         });
     });
 </script>

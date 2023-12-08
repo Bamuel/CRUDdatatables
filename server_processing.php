@@ -15,7 +15,7 @@ $primaryKey = 'user_id';
     array('db' => 'password', 'dt' => 'password'),
     array('db' => 'registration_date', 'dt' => 'registration_date')
 );*/
-$columns = "*"; //get all columns
+$columns = array("*"); //get all columns
 
 // SQL server connection information
 
@@ -24,8 +24,7 @@ $sql_details = array(
     'user' => $_ENV['DB_USER'],
     'pass' => $_ENV['DB_PASSWORD'],
     'db' => $_ENV['DB_NAME'],
-    'host' => $_ENV['DB_HOST']
-    // ,'charset' => 'utf8' // Depending on your PHP and MySQL config, you may need this
+    'host' => $_ENV['DB_HOST']// ,'charset' => 'utf8' // Depending on your PHP and MySQL config, you may need this
 );
 
 require('connectors/ssp.class.php');

@@ -219,10 +219,10 @@ class SSP {
     static function simple($request, $conn, $table, $primaryKey, $columns) {
         $bindings = array();
         $db = self::db($conn);
-        if (empty($primaryKey)){
+        if (empty($primaryKey)) {
             $primaryKey = self::getPrimaryKey($db, $table);
         }
-        if ($columns == "*") {
+        if ($columns[0] == "*") {
             $columns = self::getAllColumns($db, $table);
         }
 
