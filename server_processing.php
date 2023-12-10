@@ -17,27 +17,21 @@ if (isset($_GET['getColoumns']) && isset($_POST['table'])) {
     echo json_encode(SSP::getAllColumns($sql_details, $_POST['table']));
     exit();
 }
-
-
-// DB table to use
-$table = $_POST['table'];
-
-// Table's primary key
-$primaryKey = null;
-
-//db -> Database Column Name (Back-end)
-//dt -> DataTables Column Name (Front-end)
-/*$columns = array(
+if (isset($_GET['getTable'])) {
+    $table = $_POST['table'];
+    $primaryKey = null;
+    /*
+    $columns = array(
     array('db' => 'user_id', 'dt' => 'user_id'),
     array('db' => 'username', 'dt' => 'username'),
     array('db' => 'password', 'dt' => 'password'),
     array('db' => 'registration_date', 'dt' => 'registration_date')
-);*/
-$columns = array("*"); //get all columns
-
-//Changed to POST cause of URL GET Limits on bigger tables.
-echo json_encode(SSP::simple($_POST, $sql_details, $table, $primaryKey, $columns));
-
+    );
+    */
+    $columns = array("*"); //get all columns
+    echo json_encode(SSP::simple($_POST, $sql_details, $table, $primaryKey, $columns));
+    exit();
+}
 
 function loadEnv($filePath) {
     $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);

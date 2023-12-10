@@ -55,7 +55,7 @@
                         "processing": true,
                         "serverSide": true,
                         "ajax": {
-                            url: 'server_processing.php',
+                            url: 'server_processing.php?getTable=true',
                             type: 'POST',
                             data: {
                                 table: table
