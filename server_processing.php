@@ -1,11 +1,29 @@
 <?php
 loadEnv(__DIR__ . '/.env');
+require('connectors/ssp.class.php');
+
+$sql_details = array(
+    'user' => $_ENV['DB_USER'],
+    'pass' => $_ENV['DB_PASSWORD'],
+    'db' => $_ENV['DB_NAME'],
+    'host' => $_ENV['DB_HOST']// ,'charset' => 'utf8' // Depending on your PHP and MySQL config, you may need this
+);
+
+if (isset($_GET['getTables'])) {
+    echo json_encode(SSP::getAllTables($sql_details));
+    exit();
+}
+if (isset($_GET['getColoumns']) && isset($_POST['table'])) {
+    echo json_encode(SSP::getAllColumns($sql_details, $_POST['table']));
+    exit();
+}
+
 
 // DB table to use
-$table = 'pkmnjourney_users';
+$table = $_POST['table'];
 
 // Table's primary key
-$primaryKey = 'user_id';
+$primaryKey = null;
 
 //db -> Database Column Name (Back-end)
 //dt -> DataTables Column Name (Front-end)
@@ -16,18 +34,6 @@ $primaryKey = 'user_id';
     array('db' => 'registration_date', 'dt' => 'registration_date')
 );*/
 $columns = array("*"); //get all columns
-
-// SQL server connection information
-
-
-$sql_details = array(
-    'user' => $_ENV['DB_USER'],
-    'pass' => $_ENV['DB_PASSWORD'],
-    'db' => $_ENV['DB_NAME'],
-    'host' => $_ENV['DB_HOST']// ,'charset' => 'utf8' // Depending on your PHP and MySQL config, you may need this
-);
-
-require('connectors/ssp.class.php');
 
 //Changed to POST cause of URL GET Limits on bigger tables.
 echo json_encode(SSP::simple($_POST, $sql_details, $table, $primaryKey, $columns));

@@ -219,11 +219,12 @@ class SSP {
     static function simple($request, $conn, $table, $primaryKey, $columns) {
         $bindings = array();
         $db = self::db($conn);
-        if (empty($primaryKey)) {
-            $primaryKey = self::getPrimaryKey($db, $table);
-        }
         if ($columns[0] == "*") {
-            $columns = self::getAllColumns($db, $table);
+            $columns = self::getAllColumns($conn, $table);
+        }
+        if (empty($primaryKey)) {
+            //If there is no primaryKey get first column
+            $primaryKey = self::getPrimaryKey($conn, $table) ?? $columns[0]['db'];
         }
 
         // Allow for a JSON string to be passed in
@@ -520,10 +521,11 @@ class SSP {
         return $a;
     }
 
-    private static function getPrimaryKey($db, $table) {
+    private static function getPrimaryKey($conn, $table) {
+        $db = self::db($conn);
         $sql = "SHOW KEYS FROM $table WHERE Key_name = 'PRIMARY'";
         $result = self::sql_exec($db, $sql);
-        return $result[0]['Column_name'] ?? '*';
+        return $result[0]['Column_name'] ?? null;
     }
 
     /**
@@ -534,13 +536,24 @@ class SSP {
      * @param array $columns
      * @return array
      */
-    private static function getAllColumns(PDO $db, string $table): array {
+    public static function getAllColumns(array $conn, string $table): array {
+        $db = self::db($conn);
         $columns = array();
         $allcolumns = self::sql_exec($db, "SHOW COLUMNS FROM `$table`");
         foreach ($allcolumns as $key => $value) {
             $columns[] = array('db' => $value['Field'], 'dt' => $value['Field']);
         }
         return $columns;
+    }
+
+    public static function getAllTables(array $conn): array {
+        $db = self::db($conn);
+        $tables = array();
+        $allcolumns = self::sql_exec($db, "SHOW TABLES");
+        foreach ($allcolumns as $key => $value) {
+            $tables[] = array($value[0]);
+        }
+        return $tables;
     }
 }
 
