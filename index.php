@@ -50,7 +50,6 @@
 
                     $.each(data, function (key, value) {
                         columns.push({data: value.db, title: '<b>' + value.dt + '</b>'});
-                        console.log(value.db);
                     });
                     console.log(columns);
 
