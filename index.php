@@ -70,7 +70,7 @@
             });
         });
 
-        //on button click get the row and make it all editable
+        //on edit click get the row and make it all editable
         $('#example').on('click', '.edit', function () {
             var table = $('#sqlTables').val();
             var row = $(this).closest('tr');
@@ -82,6 +82,25 @@
                 html += '<td><input type="text" name="' + key + '" value="' + value + '"></td>';
             });
             row.html(html);
+        });+
+
+        //on save click, apply the record to the datatable and send it to the server
+        $('#example').on('click', '.save', function () {
+
+            tempChanges = [];
+            $(this).closest('tr').find('input').each(function () {
+                var value = $(this).val();
+                var key = $(this).attr('name');
+                tempChanges.push({key: key, value: value});
+            });
+            console.log(tempChanges);
+
+            html += '<td><button class="edit">Edit</button></td>';
+            $.each(data, function (key, value) {
+                html += '<td>' + value + '</td>';
+            });
+            row.html(html);
+
         });
     });
 </script>
