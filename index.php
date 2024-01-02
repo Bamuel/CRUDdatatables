@@ -76,27 +76,13 @@
             var table = $('#sqlTables').val();
             var row = $(this).closest('tr');
             var data = $('#example').DataTable().row(row).data();
-            var columns = [];
-            $.ajax({
-                url: 'server_processing.php?getColoumns=true',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    table: table
-                },
-                success: function (data2) {
-                    $.each(data2, function (key, value) {
-                        columns.push(value.db);
-                    });
-                    console.log(columns);
-                    var html = '';
-                    html += '<td><button class="save">Save</button></td>';
-                    $.each(data, function (key, value) {
-                        html += '<td><input type="text" name="' + columns[key] + '" value="' + value + '"></td>';
-                    });
-                    row.html(html);
-                }
+            console.log(data);
+            var html = '';
+            html += '<td><button class="save">Save</button></td>';
+            $.each(data, function (key, value) {
+                html += '<td><input type="text" name="' + key + '" value="' + value + '"></td>';
             });
+            row.html(html);
         });
     });
 </script>
