@@ -71,7 +71,7 @@
         });
 
         //on button click get the row and make it all editable
-        $('#example').on('click', 'button', function () {
+        $('#example').on('click', '.edit', function () {
             var table = $('#sqlTables').val();
             var row = $(this).closest('tr');
             var data = $('#example').DataTable().row(row).data();
